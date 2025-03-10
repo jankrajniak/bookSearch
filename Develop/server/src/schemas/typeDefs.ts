@@ -31,12 +31,24 @@ const typeDefs = `
       link: String}
     }   
 
+    type LoginInput {
+      email: String
+      username: String
+      password: String!
+    }
+
+    type AddUserInput {
+      username: String!
+      email: String!
+      password: String!
+    }
+
     type Query {
       me: User
     }
 
     type Mutation {
-      login(email: String!, password: String!): Auth
+      login(input: LoginInput!): Auth
       addUser(username: String!, email: String!, password: String!): Auth
       saveBook(input: BookInput): User
       removeBook(bookId: String!): User
