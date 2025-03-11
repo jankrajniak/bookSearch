@@ -3,7 +3,7 @@ import type { ChangeEvent, FormEvent } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 import { useMutation } from '@apollo/client';
 
-import { createUser } from '../utils/API';
+// import { createUser } from '../utils/API';
 import Auth from '../utils/auth';
 import type { User } from '../models/User';
 import { ADD_USER } from '../utils/mutations'; 
@@ -22,7 +22,7 @@ const SignupForm = ({}: { handleModalClose: () => void }) => {
     setUserFormData({ ...userFormData, [name]: value });
   };
 
-  const [addUser, { error }] = useMutation(ADD_USER);
+  const [addUser] = useMutation(ADD_USER);
 
   const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -44,7 +44,7 @@ const SignupForm = ({}: { handleModalClose: () => void }) => {
         throw new Error('something went wrong!');
       }
 
-      const { token } = await data.token.json();
+      const { token } = await data.token;
       Auth.login(token);
     } catch (err) {
       console.error(err);
