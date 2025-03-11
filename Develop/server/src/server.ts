@@ -23,7 +23,7 @@ const startApolloServer = async () => {
   app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
 
-  app.use('graphql', expressMiddleware(server as any,
+  app.use('/graphql', expressMiddleware(server as any,
   {
     context: authenticateToken as any
   }));

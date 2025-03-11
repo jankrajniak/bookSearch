@@ -29,7 +29,6 @@ interface SaveBookArgs {
 };
 
 
-
 const resolvers = {
     Query: {
         me: async (_parent: any, _args: any, context: any) => {
@@ -46,7 +45,7 @@ const resolvers = {
         }, 
     },
     Mutation: {
-        loginUser: async (_parents: any, { input }: LoginUserArgs) => {
+        login: async (_parents: any, { input }: LoginUserArgs) => {
             const { email, username, password } = input;
             const user = await User.findOne(
                 { $or: [
@@ -71,6 +70,7 @@ const resolvers = {
         },
 
         addUser: async (_parents: any, { input }: AddUserArgs) => {
+            console.log(input);
             const user = await User.create(input);
             
             const token = signToken(user.username, user.email, user._id);
