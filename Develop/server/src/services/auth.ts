@@ -6,7 +6,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 
-export const authenticateToken = ({ req }: any, res: any) => {
+export const authenticateToken = ({ req }: any) => {
   let token = req.body.token || req.query.token || req.headers.authorization;
 
   if (req.headers.authorization) {
@@ -14,17 +14,17 @@ export const authenticateToken = ({ req }: any, res: any) => {
   }
 
   if (!token) {
-    return res.status(400).json({ message: 'Error: No token provided' });
+    return req;
   }
   
   try {
     const { data }:any = jwt.verify(token, process.env.JWT_SECRET_KEY || '', { maxAge: '2h' });
-    res.user = data;
+    req.user = data;
   } catch (error) {
     console.log('Invalid token');
   }
 
-  return res.status(200);
+  return req;;
 };
 
 export const signToken = (username: string, email: string, _id: unknown) => {
