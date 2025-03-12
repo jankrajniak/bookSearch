@@ -25,7 +25,6 @@ const LoginForm = ({}: { handleModalClose: () => void }) => {
 
   const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log('login form submitted');
 
     // check if form has everything (as per react-bootstrap docs)
     const form = event.currentTarget;
@@ -33,20 +32,17 @@ const LoginForm = ({}: { handleModalClose: () => void }) => {
       event.preventDefault();
       event.stopPropagation();
     }
-    console.log(userFormData);
 
     try {
       const { data } = await loginUser({
         variables: { input: { email: userFormData.email, password: userFormData.password } },
       })
 
-      console.log(data);
-
       if (!data.login.token) {
         throw new Error('something went wrong!');
       }
 
-      const { token } = data.login.token;
+      const  token  = data.login.token;
       Auth.login(token);
     } catch (err) {
       console.error(err);
