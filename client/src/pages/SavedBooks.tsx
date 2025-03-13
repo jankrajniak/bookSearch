@@ -10,7 +10,8 @@ import { removeBookId } from '../utils/localStorage';
 // import type { User } from '../models/User';
 
 const SavedBooks = () => {
-  const { data: queryData } = useQuery(GET_ME);
+  const { data: queryData } = useQuery(GET_ME, 
+  { fetchPolicy: 'network-only'});
 
   const userData = queryData?.me|| {};
 
@@ -60,8 +61,6 @@ const SavedBooks = () => {
       return false;
     }
 
-    console.log('bookId', bookId);
-    console.log('Book id type is:', typeof bookId);
 
     try {
       const { data } = await removeBook({
